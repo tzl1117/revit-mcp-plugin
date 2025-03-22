@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using revit_mcp_plugin.Commands.Interfaces;
 
-namespace revit_mcp_plugin.Commands.View
+namespace revit_mcp_plugin.Commands.Access
 {
     /// <summary>
     /// 获取当前视图元素的事件处理器

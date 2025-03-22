@@ -4,7 +4,7 @@ using revit_mcp_plugin.Models;
 using System;
 using System.Threading;
 
-namespace revit_mcp_plugin.Commands.CurrentView
+namespace revit_mcp_plugin.Commands.Access
 {
     public class GetCurrentViewInfoEventHandler: IExternalEventHandler, IWaitableExternalEventHandler
     {

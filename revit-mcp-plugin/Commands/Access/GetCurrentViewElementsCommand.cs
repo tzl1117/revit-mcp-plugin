@@ -1,11 +1,10 @@
 ﻿using Autodesk.Revit.UI;
 using Newtonsoft.Json.Linq;
 using revit_mcp_plugin.Commands.Base;
-using revit_mcp_plugin.Commands.View;
 using System;
 using System.Collections.Generic;
 
-namespace RevitMcp.Commands.View
+namespace revit_mcp_plugin.Commands.Access
 {
     /// <summary>
     /// 获取当前视图元素的命令

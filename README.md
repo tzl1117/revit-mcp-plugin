@@ -6,13 +6,51 @@ revit-mcp-plugin 允许你使用claude客户端通过 MCP 协议与 Revit 进行
 
 本项目是revit客户端（接收信息，操作revit），还需要配合[revit-mcp](https://github.com/revit-mcp/revit-mcp)（向AI提供tools）使用。
 
-## 安装
-
-### 环境要求
+## 环境要求
 
 - revit 2019
 
-### 安装流程
+## 使用方法
+
+### 注册插件
+
+注册插件，重启Revit
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>revit-mcp</Name>
+    <Assembly>revit-mcp-plugin.dll</Assembly>
+    <FullClassName>revit_mcp_plugin.Core.Application</FullClassName>
+    <ClientId>090A4C8C-61DC-426D-87DF-E4BAE0F80EC1</ClientId>
+    <VendorId>revit-mcp</VendorId>
+    <VendorDescription>https://github.com/revit-mcp/revit-mcp-plugin</VendorDescription>
+  </AddIn>
+</RevitAddIns>
+```
+
+### 启用服务
+
+附加模块->mcp->开启mcp服务监听
+
+## 添加命令
+
+对于添加命令，仅需要聚焦Commands目录（命令的具体实现）以及Core/SocketService.cs文件（注册命令）
+
+Commands中的每一个命令分为两个部分：
+
+- `XXXCommand`负责解析参数并触发事件处理程序，同时处理超时和错误
+- `XXXEventHandler`负责实际的操作，使用事务确保操作的原子性
+
+命令需要在SocketService中的RegisterCommands注册后才能被mcp服务调用
+
+**流程**
+
+1. 在`Commands`目录下创建新的功能子目录（例如`Commands/window/`）
+2. 添加事件处理器（例如`CreateWindowEventHandler.cs`），事件处理器基于Revit的外部事件
+3. 添加命令类（例如`CreateWindowCommand.cs`），解析来自mcp服务器的信息，调用处理器实现
+4. 在`SocketService`的`RegisterCommands`方法中注册新命令
 
 ## 项目文件组织
 
@@ -73,10 +111,3 @@ revit_mcp/
 ### Models 目录
 
 包含数据模型类，用于在系统各部分之间传递数据。
-
-## 添加命令的流程
-
-1. 在`Commands`目录下创建新的功能子目录（例如`Commands/window/`）
-2. 添加事件处理器（例如`DeleteWindowEventHandler.cs`），事件处理器基于Revit的外部事件
-3. 添加命令类（例如`DeleteWindowCommand.cs`），解析来着mcp服务器的信息，调用处理器实现
-4. 在`SocketService`的`RegisterCommands`方法中注册新命令

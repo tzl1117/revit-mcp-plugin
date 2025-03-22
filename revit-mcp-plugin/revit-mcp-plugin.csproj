@@ -70,13 +70,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Access\GetAvailableFamilyTypesCommand.cs" />
+    <Compile Include="Commands\Access\GetAvailableFamilyTypesEventHandler.cs" />
+    <Compile Include="Commands\Access\GetSelectedElementsCommand.cs" />
+    <Compile Include="Commands\Access\GetSelectedElementsEventHandler.cs" />
     <Compile Include="Commands\Base\ExternalEventCommandBase.cs" />
     <Compile Include="Commands\Code\ExecuteCodeCommand.cs" />
     <Compile Include="Commands\Code\ExecuteCodeEventHandler.cs" />
-    <Compile Include="Commands\CurrentView\GetCurrentViewElementsCommand.cs" />
-    <Compile Include="Commands\CurrentView\GetCurrentViewElementsEventHandler.cs" />
-    <Compile Include="Commands\CurrentView\GetCurrentViewInfoCommand.cs" />
-    <Compile Include="Commands\CurrentView\GetCurrentViewInfoEventHandler.cs" />
+    <Compile Include="Commands\Access\GetCurrentViewElementsCommand.cs" />
+    <Compile Include="Commands\Access\GetCurrentViewElementsEventHandler.cs" />
+    <Compile Include="Commands\Access\GetCurrentViewInfoCommand.cs" />
+    <Compile Include="Commands\Access\GetCurrentViewInfoEventHandler.cs" />
+    <Compile Include="Commands\Delete\DeleteElementCommand.cs" />
+    <Compile Include="Commands\Delete\DeleteElementEventHandler.cs" />
     <Compile Include="Commands\Interfaces\IRevitCommand.cs" />
     <Compile Include="Commands\Interfaces\IWaitableExternalEventHandler.cs" />
     <Compile Include="Commands\Registry\RevitCommandRegistry.cs" />

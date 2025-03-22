@@ -1,11 +1,17 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Newtonsoft.Json;
+using revit_mcp_plugin.Commands.Interfaces;
+using revit_mcp_plugin.Models;
 using System;
+using System.Threading;
+using Point = revit_mcp_plugin.Models.Point;
 
-namespace revit_mcp_plugin
+namespace revit_mcp_plugin.Commands.Wall
 {
-    public class CreateWallEventHandler : IExternalEventHandler
+    /// <summary>
+    /// 创建墙的外部事件处理器
+    /// </summary>
+    public class CreateWallEventHandler : IExternalEventHandler, IWaitableExternalEventHandler
     {
         // 创建墙的参数
         private double _startX;
@@ -16,16 +22,18 @@ namespace revit_mcp_plugin
         private double _thickness;
 
         // 创建的墙体信息
-        private Wall _createdWall;
+        private Autodesk.Revit.DB.Wall _createdWall;
         public WallInfo CreatedWallInfo { get; private set; }
 
         // 标记操作是否完成
-        public bool TaskCompleted { get; private set; }
+        private bool _taskCompleted;
 
-        // 事件等待对象，用于同步
-        private readonly System.Threading.ManualResetEvent _resetEvent = new System.Threading.ManualResetEvent(false);
+        // 事件等待对象
+        private readonly ManualResetEvent _resetEvent = new ManualResetEvent(false);
 
-        // 设置创建墙的参数
+        /// <summary>
+        /// 设置创建墙的参数
+        /// </summary>
         public void SetWallParameters(double startX, double startY, double endX, double endY, double height, double thickness)
         {
             _startX = startX;
@@ -35,16 +43,23 @@ namespace revit_mcp_plugin
             _height = height;
             _thickness = thickness;
 
-            TaskCompleted = false;
+            _taskCompleted = false;
             _resetEvent.Reset();
         }
 
-        // 等待墙创建完成
+        /// <summary>
+        /// 等待墙创建完成
+        /// </summary>
+        /// <param name="timeoutMilliseconds">超时时间（毫秒）</param>
+        /// <returns>操作是否在超时前完成</returns>
         public bool WaitForCompletion(int timeoutMilliseconds = 10000)
         {
             return _resetEvent.WaitOne(timeoutMilliseconds);
         }
 
+        /// <summary>
+        /// IExternalEventHandler.Execute 实现
+        /// </summary>
         public void Execute(UIApplication app)
         {
             try
@@ -68,7 +83,7 @@ namespace revit_mcp_plugin
                     WallType wallType = collector.FirstElement() as WallType;
 
                     // 创建墙
-                    _createdWall = Wall.Create(
+                    _createdWall = Autodesk.Revit.DB.Wall.Create(
                         doc,
                         curve,
                         wallType.Id,
@@ -94,52 +109,21 @@ namespace revit_mcp_plugin
             catch (Exception ex)
             {
                 TaskDialog.Show("错误", $"创建墙体时出错: {ex.Message}");
-                CreatedWallInfo = new WallInfo { ErrorMessage = ex.Message };
+
             }
             finally
             {
-                TaskCompleted = true;
+                _taskCompleted = true;
                 _resetEvent.Set(); // 通知等待线程操作已完成
             }
         }
 
+        /// <summary>
+        /// IExternalEventHandler.GetName 实现
+        /// </summary>
         public string GetName()
         {
             return "创建墙体";
         }
-    }
-
-    // 墙体信息结构，用于返回创建的墙的详细信息
-    public class WallInfo
-    {
-        [JsonProperty("elementId")]
-        public int ElementId { get; set; }
-
-        [JsonProperty("startPoint")]
-        public Point StartPoint { get; set; } = new Point();
-
-        [JsonProperty("endPoint")]
-        public Point EndPoint { get; set; } = new Point();
-
-        [JsonProperty("height")]
-        public double Height { get; set; }
-
-        [JsonProperty("thickness")]
-        public double Thickness { get; set; }
-
-        [JsonProperty("errorMessage")]
-        public string ErrorMessage { get; set; } = string.Empty;
-    }
-
-    public class Point
-    {
-        [JsonProperty("x")]
-        public double X { get; set; }
-
-        [JsonProperty("y")]
-        public double Y { get; set; }
-
-        [JsonProperty("z")]
-        public double Z { get; set; }
     }
 }

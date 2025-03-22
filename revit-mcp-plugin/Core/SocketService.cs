@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -8,8 +7,12 @@ using System.Threading;
 using Autodesk.Revit.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using revit_mcp_plugin.Commands.Code;
+using revit_mcp_plugin.Commands.Registry;
+using revit_mcp_plugin.Commands.Wall;
+using revit_mcp_plugin.Core.JsonRPC;
 
-namespace revit_mcp_plugin
+namespace revit_mcp_plugin.Core
 {
     public class SocketService
     {
@@ -18,15 +21,8 @@ namespace revit_mcp_plugin
         private Thread _listenerThread;
         private bool _isRunning;
         private int _port = 8080;
-
-        private ExternalEvent _createWallEvent;
-        private CreateWallEventHandler _createWallHandler;
-
-        // UIApplication
         private UIApplication _uiApp;
-
-        private readonly Dictionary<string, Func<JObject, string, object>> _commandHandlers =
-            new Dictionary<string, Func<JObject, string, object>>();
+        private RevitCommandRegistry _commandRegistry;
 
         public static SocketService Instance
         {
@@ -38,7 +34,10 @@ namespace revit_mcp_plugin
             }
         }
 
-        private SocketService() { _commandHandlers["createWall"] = HandleCreateWallCommand; }
+        private SocketService()
+        {
+            _commandRegistry = new RevitCommandRegistry();
+        }
 
         public bool IsRunning => _isRunning;
 
@@ -48,12 +47,18 @@ namespace revit_mcp_plugin
             set => _port = value;
         }
 
-        // 初始化外部事件和UIApplication
+        // 初始化
         public void Initialize(UIApplication uiApp)
         {
             _uiApp = uiApp;
-            _createWallHandler = new CreateWallEventHandler();
-            _createWallEvent = ExternalEvent.Create(_createWallHandler);
+            RegisterCommands();
+        }
+
+        // 注册命令
+        private void RegisterCommands()
+        {
+            _commandRegistry.RegisterCommand(new CreateWallCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new ExecuteCodeCommand(_uiApp));
         }
 
         public void Start()
@@ -194,32 +199,22 @@ namespace revit_mcp_plugin
                     );
                 }
 
-                // 查找方法处理程序
-                if (!_commandHandlers.TryGetValue(request.Method, out var handler))
+                // 查找命令
+                if (!_commandRegistry.TryGetCommand(request.Method, out var command))
                 {
-                    return CreateErrorResponse(
-                        request.Id,
-                        JsonRPCErrorCodes.MethodNotFound,
-                        $"Method '{request.Method}' not found"
-                    );
+                    return CreateErrorResponse(request.Id, JsonRPCErrorCodes.MethodNotFound,
+                        $"Method '{request.Method}' not found");
                 }
 
+                // 执行命令
                 try
-                {
-                    // 执行命令处理程序
-                    object result = handler(request.Params, request.Id);
-
-                    // 创建成功响应
+                {                
+                    object result = command.Execute(request.GetParamsObject(), request.Id);
                     return CreateSuccessResponse(request.Id, result);
                 }
                 catch (Exception ex)
                 {
-                    // 创建错误响应
-                    return CreateErrorResponse(
-                        request.Id,
-                        JsonRPCErrorCodes.InternalError,
-                        ex.Message
-                    );
+                    return CreateErrorResponse(request.Id, JsonRPCErrorCodes.InternalError, ex.Message);
                 }
             }
             catch (JsonException)
@@ -267,41 +262,6 @@ namespace revit_mcp_plugin
             };
 
             return response.ToJson();
-        }
-
-        private object HandleCreateWallCommand(JObject parameters, string requestId)
-        {
-            try
-            {
-                // 解析墙参数
-                double startX = parameters["startX"].Value<double>();
-                double startY = parameters["startY"].Value<double>();
-                double endX = parameters["endX"].Value<double>();
-                double endY = parameters["endY"].Value<double>();
-                double height = parameters["height"].Value<double>();
-                double width = parameters.ContainsKey("width") ? parameters["width"].Value<double>() : 0.3;
-
-                // 设置墙体参数
-                _createWallHandler.SetWallParameters(startX, startY, endX, endY, height, width);
-
-                // 触发外部事件
-                _createWallEvent.Raise();
-
-                // 等待墙体创建完成
-                if (_createWallHandler.WaitForCompletion(10000))
-                {
-                    // 返回创建的墙体信息
-                    return _createWallHandler.CreatedWallInfo;
-                }
-                else
-                {
-                    throw new TimeoutException("Operation timed out");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Failed to create wall: {ex.Message}");
-            }
         }
     }
 }

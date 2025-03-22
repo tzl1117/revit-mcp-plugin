@@ -3,7 +3,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
 
-namespace revit_mcp_plugin
+namespace revit_mcp_plugin.Core
 {
     [Transaction(TransactionMode.Manual)]
     public class MCPServiceConnection : IExternalCommand

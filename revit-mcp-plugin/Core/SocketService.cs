@@ -8,9 +8,11 @@ using Autodesk.Revit.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using revit_mcp_plugin.Commands.Code;
+using revit_mcp_plugin.Commands.CurrentView;
 using revit_mcp_plugin.Commands.Registry;
 using revit_mcp_plugin.Commands.Wall;
 using revit_mcp_plugin.Core.JsonRPC;
+using RevitMcp.Commands.View;
 
 namespace revit_mcp_plugin.Core
 {
@@ -57,6 +59,8 @@ namespace revit_mcp_plugin.Core
         // 注册命令
         private void RegisterCommands()
         {
+            _commandRegistry.RegisterCommand(new GetCurrentViewInfoCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new GetCurrentViewElementsCommand(_uiApp));
             _commandRegistry.RegisterCommand(new CreateWallCommand(_uiApp));
             _commandRegistry.RegisterCommand(new ExecuteCodeCommand(_uiApp));
         }

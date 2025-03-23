@@ -6,26 +6,25 @@ using System.Threading.Tasks;
 using Autodesk.Revit.UI;
 using Newtonsoft.Json.Linq;
 using revit_mcp_plugin.Commands.Base;
-using revit_mcp_plugin.Commands.Interfaces;
 using revit_mcp_plugin.Models;
 
 namespace revit_mcp_plugin.Commands.Create
 {
-    public class CreateFloorCommand : ExternalEventCommandBase
+    public class CreateWallCommand : ExternalEventCommandBase
     {
-        private CreateFloorEventHandler _handler => (CreateFloorEventHandler)Handler;
+        private CreateWallEventHandler _handler => (CreateWallEventHandler)Handler;
 
         /// <summary>
         /// 命令名称
         /// </summary>
-        public override string CommandName => "create_surface_based_element";
+        public override string CommandName => "create_line_based_element";
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="uiApp">Revit UIApplication</param>
-        public CreateFloorCommand(UIApplication uiApp)
-            : base(new CreateFloorEventHandler(), uiApp)
+        public CreateWallCommand(UIApplication uiApp)
+            : base(new CreateWallEventHandler(), uiApp)
         {
         }
 
@@ -33,11 +32,11 @@ namespace revit_mcp_plugin.Commands.Create
         {
             try
             {
-                List<ShellComponent> data = new List<ShellComponent>();
+                List<LineBasedComponent> data = new List<LineBasedComponent>();
                 // 解析参数
-                data = parameters["data"].ToObject<List<ShellComponent>>();
+                data = parameters["data"].ToObject<List<LineBasedComponent>>();
                 if (data == null)
-                    throw new Exception("创建楼板操作超时");
+                    throw new Exception("创建墙操作超时");
 
                 // 设置墙体参数
                 _handler.SetParameters(data);
@@ -49,12 +48,12 @@ namespace revit_mcp_plugin.Commands.Create
                 }
                 else
                 {
-                    throw new TimeoutException("创建楼板操作超时");
+                    throw new TimeoutException("创建墙操作超时");
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"创建楼板失败: {ex.Message}");
+                throw new Exception($"创建墙失败: {ex.Message}");
             }
         }
     }

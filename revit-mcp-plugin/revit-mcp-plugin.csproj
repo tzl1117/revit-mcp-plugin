@@ -79,12 +79,16 @@
     <Compile Include="Commands\Base\ExternalEventCommandBase.cs" />
     <Compile Include="Commands\Code\ExecuteCodeCommand.cs" />
     <Compile Include="Commands\Code\ExecuteCodeEventHandler.cs" />
+    <Compile Include="Commands\Create\CreateDoorCommand.cs" />
+    <Compile Include="Commands\Create\CreateDoorEventHandler.cs" />
     <Compile Include="Commands\Create\CreateFloorCommand.cs" />
     <Compile Include="Commands\Create\CreateFloorEventHandler.cs" />
     <Compile Include="Commands\Access\GetCurrentViewElementsCommand.cs" />
     <Compile Include="Commands\Access\GetCurrentViewElementsEventHandler.cs" />
     <Compile Include="Commands\Access\GetCurrentViewInfoCommand.cs" />
     <Compile Include="Commands\Access\GetCurrentViewInfoEventHandler.cs" />
+    <Compile Include="Commands\Create\CreateWallCommand.cs" />
+    <Compile Include="Commands\Create\CreateWallEventHandler.cs" />
     <Compile Include="Commands\Delete\DeleteElementCommand.cs" />
     <Compile Include="Commands\Delete\DeleteElementEventHandler.cs" />
     <Compile Include="Commands\Interfaces\IRevitCommand.cs" />

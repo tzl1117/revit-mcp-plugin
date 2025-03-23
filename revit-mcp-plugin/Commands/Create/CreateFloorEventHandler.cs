@@ -26,7 +26,7 @@ namespace revit_mcp_plugin.Commands.Create
         /// <summary>
         /// 楼板数据
         /// </summary>
-        public List<ShellComponent> CreatedFloorInfo { get; private set; }
+        public List<ShellComponent> CreatedInfo { get; private set; }
 
         public string _floorName = "常规 - ";
         public string _levelName = "F01_";
@@ -35,9 +35,9 @@ namespace revit_mcp_plugin.Commands.Create
         /// <summary>
         /// 设置创建楼板的参数
         /// </summary>
-        public void SetFloorParameters(List<ShellComponent> data)
+        public void SetParameters(List<ShellComponent> data)
         {
-            CreatedFloorInfo = data;
+            CreatedInfo = data;
             _resetEvent.Reset();
         }
         public void Execute(UIApplication uiapp)
@@ -46,14 +46,14 @@ namespace revit_mcp_plugin.Commands.Create
 
             try
             {
-                foreach (var floorData in CreatedFloorInfo)
+                foreach (var floorData in CreatedInfo)
                 {
                     // 1. 创建标高
                     Level level = null;
                     using (Transaction tran = new Transaction(doc, "创建标高"))
                     {
                         tran.Start();
-                        level = doc.CreateOrGetLevel(floorData.BaseLevel / 304.8, $"{_levelName}{CreatedFloorInfo.IndexOf(floorData) + 1}");
+                        level = doc.CreateOrGetLevel(floorData.BaseLevel / 304.8, $"{_levelName}{CreatedInfo.IndexOf(floorData) + 1}");
                         tran.Commit();
                     }
                     if (level == null)
@@ -61,27 +61,13 @@ namespace revit_mcp_plugin.Commands.Create
 
                     // 2. 创建或获取楼板类型
                     FloorType floorType = null;
-                    if (floorData.TypeId != -1 && floorData.TypeId != 0)
+                    using (Transaction tran = new Transaction(doc, "创建楼板类型"))
                     {
-                        ElementId typeId = new ElementId(floorData.TypeId);
-                        if (typeId!=null)
-                        {
-                            Element typeEle = doc.GetElement(typeId);
-                            if (typeEle!=null&& typeEle is FloorType)
-                            {
-                                floorType = typeEle as FloorType;
-                            }
-                        }
+                        tran.Start();
+                        floorType = GetOrCreateFloorType(doc, floorData.TypeId, floorData.Thickness);
+                        tran.Commit();
                     }
-                    if (floorType==null)
-                    {
-                        using (Transaction tran = new Transaction(doc, "创建楼板类型"))
-                        {
-                            tran.Start();
-                            floorType = GetOrCreateFloorType(doc, floorData.Thickness);
-                            tran.Commit();
-                        }
-                    }
+
                     if (floorType == null)
                         continue;
 
@@ -143,8 +129,25 @@ namespace revit_mcp_plugin.Commands.Create
         /// </summary>
         /// <param name="thicknessInMM">目标厚度（毫米）</param>
         /// <returns>符合厚度要求的楼板类型</returns>
-        private FloorType GetOrCreateFloorType(Document doc, double thicknessInMM)
+        private FloorType GetOrCreateFloorType(Document doc, int typeId, double thicknessInMM = 200)
         {
+            // Case1 如果有指定有效的楼板类型
+            if (typeId != -1 && typeId != 0)
+            {
+                FloorType floorType = null;
+                ElementId typeELeId = new ElementId(typeId);
+                if (typeELeId != null)
+                {
+                    Element typeEle = doc.GetElement(typeELeId);
+                    if (typeEle != null && typeEle is FloorType)
+                    {
+                        floorType = typeEle as FloorType;
+                        return floorType;
+                    }
+                }
+            }
+
+            // Case2 如果没有有效的楼板类型
             // 将毫米转换为英尺
             double thicknessInFeet = thicknessInMM / 304.8;
 
@@ -154,10 +157,8 @@ namespace revit_mcp_plugin.Commands.Create
                                      .OfCategory(BuiltInCategory.OST_Floors)        // 仅获取楼板类别
                                      .Cast<FloorType>()                            // 转换为FloorType类型
                                      .FirstOrDefault(w => w.Name == $"{_floorName}{thicknessInMM}mm");
-
             if (existingType != null)
                 return existingType;
-
             // 如果没有找到匹配的楼板类型，创建新的
             FloorType baseFloorType = existingType = new FilteredElementCollector(doc)
                                      .OfClass(typeof(FloorType))                    // 仅获取FloorType类

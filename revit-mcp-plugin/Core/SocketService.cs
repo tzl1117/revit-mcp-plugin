@@ -9,9 +9,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using revit_mcp_plugin.Commands.Code;
 using revit_mcp_plugin.Commands.Create;
+using revit_mcp_plugin.Commands.Access;
 using revit_mcp_plugin.Commands.Registry;
 using revit_mcp_plugin.Commands.Wall;
 using revit_mcp_plugin.Core.JsonRPC;
+using revit_mcp_plugin.Commands.Delete;
 
 namespace revit_mcp_plugin.Core
 {
@@ -58,7 +60,12 @@ namespace revit_mcp_plugin.Core
         // 注册命令
         private void RegisterCommands()
         {
+            _commandRegistry.RegisterCommand(new GetAvailableFamilyTypesCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new GetCurrentViewInfoCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new GetCurrentViewElementsCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new GetSelectedElementsCommand(_uiApp));
             _commandRegistry.RegisterCommand(new CreateWallCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new DeleteElementCommand(_uiApp));
             _commandRegistry.RegisterCommand(new ExecuteCodeCommand(_uiApp));
             _commandRegistry.RegisterCommand(new CreateFloorCommand(_uiApp));
         }

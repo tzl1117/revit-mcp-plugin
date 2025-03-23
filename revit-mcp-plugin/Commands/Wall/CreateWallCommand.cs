@@ -42,10 +42,10 @@ namespace revit_mcp_plugin.Commands.Wall
                 double endX = parameters["endX"].Value<double>();
                 double endY = parameters["endY"].Value<double>();
                 double height = parameters["height"].Value<double>();
-                double width = parameters.ContainsKey("width") ? parameters["width"].Value<double>() : 0.3;
+                double thickness = parameters["thickness"].Value<double>();
 
                 // 设置墙体参数
-                _handler.SetWallParameters(startX, startY, endX, endY, height, width);
+                _handler.SetWallParameters(startX, startY, endX, endY, height, thickness);
 
                 // 触发外部事件并等待完成
                 if (RaiseAndWaitForCompletion(10000))

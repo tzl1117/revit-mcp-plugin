@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.DB;
+using Newtonsoft.Json;
 
 namespace revit_mcp_plugin.Models
 {
@@ -12,8 +13,11 @@ namespace revit_mcp_plugin.Models
     /// </summary>
     public class JZPoint
     {
+        [JsonProperty("x")]
         public double X { get; set; }
+        [JsonProperty("y")]
         public double Y { get; set; }
+        [JsonProperty("z")]
         public double Z { get; set; }
 
         /// <summary>

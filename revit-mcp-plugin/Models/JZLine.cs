@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.DB;
+using Newtonsoft.Json;
 
 namespace revit_mcp_plugin.Models
 {
@@ -15,10 +16,12 @@ namespace revit_mcp_plugin.Models
         /// <summary>
         /// 起点
         /// </summary>
+        [JsonProperty("p0")]
         public JZPoint P0 { get; set; }
         /// <summary>
         /// 终点
         /// </summary>
+        [JsonProperty("p1")]
         public JZPoint P1 { get; set; }
 
         /// <summary>

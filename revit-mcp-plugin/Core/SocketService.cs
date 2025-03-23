@@ -11,7 +11,6 @@ using revit_mcp_plugin.Commands.Code;
 using revit_mcp_plugin.Commands.Create;
 using revit_mcp_plugin.Commands.Access;
 using revit_mcp_plugin.Commands.Registry;
-using revit_mcp_plugin.Commands.Wall;
 using revit_mcp_plugin.Core.JsonRPC;
 using revit_mcp_plugin.Commands.Delete;
 
@@ -64,10 +63,11 @@ namespace revit_mcp_plugin.Core
             _commandRegistry.RegisterCommand(new GetCurrentViewInfoCommand(_uiApp));
             _commandRegistry.RegisterCommand(new GetCurrentViewElementsCommand(_uiApp));
             _commandRegistry.RegisterCommand(new GetSelectedElementsCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new CreateWallCommand(_uiApp));
             _commandRegistry.RegisterCommand(new DeleteElementCommand(_uiApp));
             _commandRegistry.RegisterCommand(new ExecuteCodeCommand(_uiApp));
             _commandRegistry.RegisterCommand(new CreateFloorCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new CreateDoorCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new CreateWallCommand(_uiApp));
         }
 
         public void Start()

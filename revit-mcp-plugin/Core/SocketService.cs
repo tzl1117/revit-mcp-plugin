@@ -8,6 +8,7 @@ using Autodesk.Revit.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using revit_mcp_plugin.Commands.Code;
+using revit_mcp_plugin.Commands.Create;
 using revit_mcp_plugin.Commands.Registry;
 using revit_mcp_plugin.Commands.Wall;
 using revit_mcp_plugin.Core.JsonRPC;
@@ -59,6 +60,7 @@ namespace revit_mcp_plugin.Core
         {
             _commandRegistry.RegisterCommand(new CreateWallCommand(_uiApp));
             _commandRegistry.RegisterCommand(new ExecuteCodeCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new CreateFloorCommand(_uiApp));
         }
 
         public void Start()
@@ -161,7 +163,7 @@ namespace revit_mcp_plugin.Core
                     }
 
                     string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                    Console.WriteLine($"收到消息: {message}");
+                    System.Diagnostics.Trace.WriteLine($"收到消息: {message}");
 
                     string response = ProcessJsonRPCRequest(message);
 

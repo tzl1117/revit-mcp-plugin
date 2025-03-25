@@ -38,7 +38,7 @@ namespace revit_mcp_plugin.Utils
                  .FirstOrDefault(l => l.Name == levelName);
             if (namesakeLevel != null)
             {
-                levelName = $"{levelName}_{newLevel.Id.IntegerValue.ToString()}";
+                levelName = $"{levelName}_{newLevel.Id.Value.ToString()}";
             }
             newLevel.Name = levelName;
 

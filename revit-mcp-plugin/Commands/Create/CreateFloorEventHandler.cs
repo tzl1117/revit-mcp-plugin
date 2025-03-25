@@ -71,29 +71,6 @@ namespace revit_mcp_plugin.Commands.Create
                     if (floorType == null)
                         continue;
 
-                    // 3. 批量创建楼板
-                    Floor floor = null;
-                    using (Transaction tran = new Transaction(doc, "创建楼板"))
-                    {
-                        tran.Start();
-
-                        CurveArray curves = new CurveArray();
-                        foreach (var jzLine in floorData.Boundary.OuterLoop)
-                        {
-                            curves.Append(JZLine.ToLine(jzLine));
-                        }
-
-                        floor = doc.Create.NewFloor(curves, floorType, level, _structural);
-
-                        //编辑楼板参数
-                        if (floor != null)
-                        {
-                            floor.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM).Set(floorData.BaseOffset / 304.8);
-                        }
-
-                        tran.Commit();
-                        //doc.Refresh(0);
-                    }
                 }
             }
             catch (Exception ex)

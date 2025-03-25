@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>revit_mcp_plugin</RootNamespace>
     <AssemblyName>revit-mcp-plugin</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -49,17 +49,23 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdWindows, Version=5.0.3.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\AdWindows.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RevitAPI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="RevitAddInUtility, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\RevitAddInUtility.dll</HintPath>
     </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="RevitAPI, Version=24.0.0.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\RevitAPI.dll</HintPath>
     </Reference>
+    <Reference Include="RevitAPIUI, Version=24.0.0.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\RevitAPIUI.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="WindowsBase" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows" />
@@ -70,6 +76,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIFramework, Version=24.0.0.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\UIFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="UIFrameworkServices, Version=24.0.0.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\UIFrameworkServices.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Access\GetAvailableFamilyTypesCommand.cs" />
@@ -79,6 +91,8 @@
     <Compile Include="Commands\Base\ExternalEventCommandBase.cs" />
     <Compile Include="Commands\Code\ExecuteCodeCommand.cs" />
     <Compile Include="Commands\Code\ExecuteCodeEventHandler.cs" />
+    <Compile Include="Commands\Create\ColorSplashCommand.cs" />
+    <Compile Include="Commands\Create\ColorSplashEventHandler.cs" />
     <Compile Include="Commands\Create\CreateDoorCommand.cs" />
     <Compile Include="Commands\Create\CreateDoorEventHandler.cs" />
     <Compile Include="Commands\Create\CreateFloorCommand.cs" />
@@ -89,6 +103,8 @@
     <Compile Include="Commands\Access\GetCurrentViewInfoEventHandler.cs" />
     <Compile Include="Commands\Create\CreateWallCommand.cs" />
     <Compile Include="Commands\Create\CreateWallEventHandler.cs" />
+    <Compile Include="Commands\Create\TagWallsCommand.cs" />
+    <Compile Include="Commands\Create\TagWallsEventHandler.cs" />
     <Compile Include="Commands\Delete\DeleteElementCommand.cs" />
     <Compile Include="Commands\Delete\DeleteElementEventHandler.cs" />
     <Compile Include="Commands\Interfaces\IRevitCommand.cs" />
@@ -120,6 +136,10 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Core\Ressources\icon-16.png" />
+    <Resource Include="Core\Ressources\icon-32.png" />
+    <Resource Include="Core\Ressources\icon-96.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

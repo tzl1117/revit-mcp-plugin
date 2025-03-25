@@ -68,6 +68,8 @@ namespace revit_mcp_plugin.Core
             _commandRegistry.RegisterCommand(new CreateFloorCommand(_uiApp));
             _commandRegistry.RegisterCommand(new CreateDoorCommand(_uiApp));
             _commandRegistry.RegisterCommand(new CreateWallCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new TagWallsCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new ColorSplashCommand(_uiApp));
         }
 
         public void Start()

@@ -46,7 +46,7 @@ namespace revit_mcp_plugin.Commands.Access
                 // 转换为ElementInfo列表
                 ResultElements = selectedElements.Select(element => new ElementInfo
                 {
-                    Id = element.Id.IntegerValue,
+                    Id = element.Id.Value,
                     UniqueId = element.UniqueId,
                     Name = element.Name,
                     Category = element.Category?.Name

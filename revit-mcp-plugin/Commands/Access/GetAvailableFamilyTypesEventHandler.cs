@@ -68,8 +68,8 @@ namespace revit_mcp_plugin.Commands.Access
                     {
                         filteredElements = filteredElements.Where(et =>
                         {
-                            var categoryId = et.Category?.Id.IntegerValue;
-                            return categoryId != null && validCategoryIds.Contains(categoryId.Value);
+                            var categoryId = et.Category?.Id.Value;
+                            return categoryId != null && validCategoryIds.Contains((int)categoryId.Value);
                         });
                     }
                 }
@@ -108,7 +108,7 @@ namespace revit_mcp_plugin.Commands.Access
                     }
                     return new FamilyTypeInfo
                     {
-                        FamilyTypeId = et.Id.IntegerValue,
+                        FamilyTypeId = et.Id.Value,
                         UniqueId = et.UniqueId,
                         FamilyName = familyName,
                         TypeName = et.Name,
@@ -135,7 +135,7 @@ namespace revit_mcp_plugin.Commands.Access
 
     public class FamilyTypeInfo
     {
-        public int FamilyTypeId { get; set; }
+        public long FamilyTypeId { get; set; }
         public string UniqueId { get; set; }
         public string FamilyName { get; set; }
         public string TypeName { get; set; }

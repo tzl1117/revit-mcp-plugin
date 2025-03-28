@@ -1,42 +1,38 @@
-﻿using System;
+﻿using Autodesk.Revit.DB;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace revit_mcp_plugin.Models
 {
     /// <summary>
-    /// 基于点的构件 (Point-Based Components)
+    /// 线状构件
     /// </summary>
-    public class PointBasedComponent
+    public class LineElement
     {
         /// <summary>
-        /// 构件类型名称
+        /// 构件类型
         /// </summary>
-        [JsonProperty("name")]
-        public string Name { get; set; }
+        [JsonProperty("category")]
+        public string Category { get; set; } = "INVALID";
         /// <summary>
         /// 类型Id
         /// </summary>
         [JsonProperty("typeId")]
         public int TypeId { get; set; } = -1;
         /// <summary>
-        /// 定位点坐标
+        /// 路径曲线
         /// </summary>
-        [JsonProperty("locationPoint")]
-        public JZPoint LocationPoint { get; set; }
+        [JsonProperty("locationLine")]
+        public JZLine LocationLine { get; set; }
         /// <summary>
-        /// 宽度
+        /// 厚度
         /// </summary>
-        [JsonProperty("width")]
-        public double Width { get; set; } = -1;
-        /// <summary>
-        /// 深度
-        /// </summary>
-        [JsonProperty("depth")]
-        public double Depth { get; set; }
+        [JsonProperty("thickness")]
+        public double Thickness { get; set; }
         /// <summary>
         /// 高度
         /// </summary>
@@ -48,7 +44,7 @@ namespace revit_mcp_plugin.Models
         [JsonProperty("baseLevel")]
         public double BaseLevel { get; set; }
         /// <summary>
-        /// 底部偏移
+        /// 底部偏移/基于面的偏移
         /// </summary>
         [JsonProperty("baseOffset")]
         public double BaseOffset { get; set; }
@@ -58,7 +54,7 @@ namespace revit_mcp_plugin.Models
         [JsonProperty("parameters")]
         public Dictionary<string, double> Parameters { get; set; }
 
-        public PointBasedComponent()
+        public LineElement()
         {
             Parameters = new Dictionary<string, double>();
         }

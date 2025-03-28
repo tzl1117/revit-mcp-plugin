@@ -69,8 +69,6 @@ namespace revit_mcp_plugin.Models
             P0 = new JZPoint(x0, y0, 0);
             P1 = new JZPoint(x1, y1, 0);
         }
-
-
         /// <summary>
         /// 获取线段的长度
         /// </summary>

@@ -1,18 +1,18 @@
-﻿using System;
+﻿using Autodesk.Revit.UI;
+using Newtonsoft.Json.Linq;
+using revit_mcp_plugin.Commands.Base;
+using revit_mcp_plugin.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autodesk.Revit.UI;
-using Newtonsoft.Json.Linq;
-using revit_mcp_plugin.Commands.Base;
-using revit_mcp_plugin.Models;
 
 namespace revit_mcp_plugin.Commands.Create
 {
-    public class CreateDoorCommand : ExternalEventCommandBase
+    public class CreatePointElementCommand : ExternalEventCommandBase
     {
-        private CreateDoorEventHandler _handler => (CreateDoorEventHandler)Handler;
+        private CreatePointElementEventHandler _handler => (CreatePointElementEventHandler)Handler;
 
         /// <summary>
         /// 命令名称
@@ -23,8 +23,8 @@ namespace revit_mcp_plugin.Commands.Create
         /// 构造函数
         /// </summary>
         /// <param name="uiApp">Revit UIApplication</param>
-        public CreateDoorCommand(UIApplication uiApp)
-            : base(new CreateDoorEventHandler(), uiApp)
+        public CreatePointElementCommand(UIApplication uiApp)
+            : base(new CreatePointElementEventHandler(), uiApp)
         {
         }
 
@@ -32,28 +32,28 @@ namespace revit_mcp_plugin.Commands.Create
         {
             try
             {
-                List<PointBasedComponent> data = new List<PointBasedComponent>();
+                List<PointElement> data = new List<PointElement>();
                 // 解析参数
-                data = parameters["data"].ToObject<List<PointBasedComponent>>();
+                data = parameters["data"].ToObject<List<PointElement>>();
                 if (data == null)
-                    throw new Exception("创建门操作超时");
+                    throw new ArgumentNullException(nameof(data),"AI传入数据为空");
 
-                // 设置墙体参数
+                // 设置点状构件体参数
                 _handler.SetParameters(data);
 
                 // 触发外部事件并等待完成
                 if (RaiseAndWaitForCompletion(10000))
                 {
-                    return _handler.CreatedInfo;
+                    return _handler.Result;
                 }
                 else
                 {
-                    throw new TimeoutException("创建门操作超时");
+                    throw new TimeoutException("创建点状构件操作超时");
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"创建门失败: {ex.Message}");
+                throw new Exception($"创建点状构件失败: {ex.Message}");
             }
         }
     }

@@ -65,9 +65,9 @@ namespace revit_mcp_plugin.Core
             _commandRegistry.RegisterCommand(new GetSelectedElementsCommand(_uiApp));
             _commandRegistry.RegisterCommand(new DeleteElementCommand(_uiApp));
             _commandRegistry.RegisterCommand(new ExecuteCodeCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new CreateFloorCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new CreateDoorCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new CreateWallCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new CreatePointElementCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new CreateLineElementCommand(_uiApp));
+            _commandRegistry.RegisterCommand(new CreateSurfaceElementCommand(_uiApp));
             _commandRegistry.RegisterCommand(new TagWallsCommand(_uiApp));
             _commandRegistry.RegisterCommand(new ColorSplashCommand(_uiApp));
         }

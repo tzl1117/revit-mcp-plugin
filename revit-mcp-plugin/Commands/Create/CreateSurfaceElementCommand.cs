@@ -1,19 +1,18 @@
-﻿using System;
+﻿using Autodesk.Revit.UI;
+using Newtonsoft.Json.Linq;
+using revit_mcp_plugin.Commands.Base;
+using revit_mcp_plugin.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autodesk.Revit.UI;
-using Newtonsoft.Json.Linq;
-using revit_mcp_plugin.Commands.Base;
-using revit_mcp_plugin.Commands.Interfaces;
-using revit_mcp_plugin.Models;
 
 namespace revit_mcp_plugin.Commands.Create
 {
-    public class CreateFloorCommand : ExternalEventCommandBase
+    public class CreateSurfaceElementCommand : ExternalEventCommandBase
     {
-        private CreateFloorEventHandler _handler => (CreateFloorEventHandler)Handler;
+        private CreateSurfaceElementEventHandler _handler => (CreateSurfaceElementEventHandler)Handler;
 
         /// <summary>
         /// 命令名称
@@ -24,8 +23,8 @@ namespace revit_mcp_plugin.Commands.Create
         /// 构造函数
         /// </summary>
         /// <param name="uiApp">Revit UIApplication</param>
-        public CreateFloorCommand(UIApplication uiApp)
-            : base(new CreateFloorEventHandler(), uiApp)
+        public CreateSurfaceElementCommand(UIApplication uiApp)
+            : base(new CreateSurfaceElementEventHandler(), uiApp)
         {
         }
 
@@ -33,28 +32,28 @@ namespace revit_mcp_plugin.Commands.Create
         {
             try
             {
-                List<ShellComponent> data = new List<ShellComponent>();
+                List<SurfaceElement> data = new List<SurfaceElement>();
                 // 解析参数
-                data = parameters["data"].ToObject<List<ShellComponent>>();
+                data = parameters["data"].ToObject<List<SurfaceElement>>();
                 if (data == null)
-                    throw new Exception("创建楼板操作超时");
+                    throw new ArgumentNullException(nameof(data), "AI传入数据为空");
 
-                // 设置墙体参数
+                // 设置面状构件体参数
                 _handler.SetParameters(data);
 
                 // 触发外部事件并等待完成
                 if (RaiseAndWaitForCompletion(10000))
                 {
-                    return _handler.CreatedInfo;
+                    return _handler.Result;
                 }
                 else
                 {
-                    throw new TimeoutException("创建楼板操作超时");
+                    throw new TimeoutException("创建面状构件操作超时");
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"创建楼板失败: {ex.Message}");
+                throw new Exception($"创建面状构件失败: {ex.Message}");
             }
         }
     }

@@ -1,18 +1,18 @@
-﻿using System;
+﻿using Autodesk.Revit.UI;
+using Newtonsoft.Json.Linq;
+using revit_mcp_plugin.Commands.Base;
+using revit_mcp_plugin.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autodesk.Revit.UI;
-using Newtonsoft.Json.Linq;
-using revit_mcp_plugin.Commands.Base;
-using revit_mcp_plugin.Models;
 
 namespace revit_mcp_plugin.Commands.Create
 {
-    public class CreateWallCommand : ExternalEventCommandBase
+    public class CreateLineElementCommand : ExternalEventCommandBase
     {
-        private CreateWallEventHandler _handler => (CreateWallEventHandler)Handler;
+        private CreateLineElementEventHandler _handler => (CreateLineElementEventHandler)Handler;
 
         /// <summary>
         /// 命令名称
@@ -23,8 +23,8 @@ namespace revit_mcp_plugin.Commands.Create
         /// 构造函数
         /// </summary>
         /// <param name="uiApp">Revit UIApplication</param>
-        public CreateWallCommand(UIApplication uiApp)
-            : base(new CreateWallEventHandler(), uiApp)
+        public CreateLineElementCommand(UIApplication uiApp)
+            : base(new CreateLineElementEventHandler(), uiApp)
         {
         }
 
@@ -32,28 +32,28 @@ namespace revit_mcp_plugin.Commands.Create
         {
             try
             {
-                List<LineBasedComponent> data = new List<LineBasedComponent>();
+                List<LineElement> data = new List<LineElement>();
                 // 解析参数
-                data = parameters["data"].ToObject<List<LineBasedComponent>>();
+                data = parameters["data"].ToObject<List<LineElement>>();
                 if (data == null)
-                    throw new Exception("创建墙操作超时");
+                    throw new ArgumentNullException(nameof(data), "AI传入数据为空");
 
-                // 设置墙体参数
+                // 设置线状构件体参数
                 _handler.SetParameters(data);
 
                 // 触发外部事件并等待完成
                 if (RaiseAndWaitForCompletion(10000))
                 {
-                    return _handler.CreatedInfo;
+                    return _handler.Result;
                 }
                 else
                 {
-                    throw new TimeoutException("创建墙操作超时");
+                    throw new TimeoutException("创建线状构件操作超时");
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"创建墙失败: {ex.Message}");
+                throw new Exception($"创建线状构件失败: {ex.Message}");
             }
         }
     }

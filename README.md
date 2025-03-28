@@ -1,5 +1,111 @@
 # revit-mcp-plugin
 
+[Chinese Version](#简介)
+
+# Introduction
+
+The revit-mcp-plugin allows you to interact with Revit through the MCP protocol using the Claude client.
+
+This project is the Revit client (receives messages, operates Revit) and needs to be used in conjunction with [revit-mcp](https://github.com/revit-mcp/revit-mcp) (provides tools to AI).
+
+## Environment Requirements
+* Revit 2019
+
+## Usage Instructions
+
+### Register Plugin
+Register the plugin and restart Revit:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>revit-mcp</Name>
+    <Assembly>revit-mcp-plugin.dll</Assembly>
+    <FullClassName>revit_mcp_plugin.Core.Application</FullClassName>
+    <ClientId>090A4C8C-61DC-426D-87DF-E4BAE0F80EC1</ClientId>
+    <VendorId>revit-mcp</VendorId>
+    <VendorDescription>https://github.com/revit-mcp/revit-mcp-plugin</VendorDescription>
+  </AddIn>
+</RevitAddIns>
+```
+
+### Enable Service
+Add-in Modules -> mcp -> Start mcp service listening
+
+### Adding Commands
+To add commands, you only need to focus on the Commands directory (specific command implementation) and the Core/SocketService.cs file (command registration).
+
+Each command in the Commands directory is divided into two parts:
+* `XXXCommand` is responsible for parsing parameters and triggering event handlers, while also handling timeouts and errors
+* `XXXEventHandler` is responsible for the actual operation, using transactions to ensure atomicity
+
+Commands need to be registered in the RegisterCommands method of SocketService before they can be called by the mcp service.
+
+**Process**
+1. Create a new feature subdirectory in the `Commands` directory (e.g., `Commands/window/`)
+2. Add an event handler (e.g., `CreateWindowEventHandler.cs`), which is based on Revit's external event
+3. Add a command class (e.g., `CreateWindowCommand.cs`), which parses information from the mcp server and calls the handler for implementation
+4. Register the new command in the `RegisterCommands` method of `SocketService`
+
+## Project File Organization
+
+```
+revit_mcp/
+├── Core/
+│   ├── Application.cs                     # Application entry point
+│   ├── MCPServiceConnection.cs            # Revit external command
+│   ├── SocketService.cs                   # Socket service implementation
+│   └── JsonRPC/                           # JSON-RPC related classes
+│       ├── JsonRPCRequest.cs              # Request model
+│       ├── JsonRPCResponse.cs             # Response model
+│       ├── JsonRPCErrorCodes.cs           # Error code constants
+│       └── JsonRPCSerializer.cs           # Serialization/deserialization helper
+│
+├── Commands/
+│   ├── Interfaces/                        # Command interfaces
+│   │   ├── IRevitCommand.cs               # Command interface
+│   │   └── IWaitableExternalEventHandler.cs # Event wait handler interface
+│   │
+│   ├── Base/
+│   │   └── ExternalEventCommandBase.cs    # External event-based command base class
+│   │
+│   ├── Registry/
+│   │   └── RevitCommandRegistry.cs        # Command registration
+│   │
+│   ├── Wall/                              # Wall-related commands
+│   │   ├── CreateWallEventHandler.cs      # Create wall event handler
+│   │   └── CreateWallCommand.cs           # Create wall command
+│   │
+│   └── Code/                              # Code execution related commands
+│       ├── ExecuteCodeEventHandler.cs     # Execute code event handler
+│       └── ExecuteCodeCommand.cs          # Execute code command
+│
+├── Utils/                                 # Utility classes
+│
+└── Models/                                # Data models
+```
+
+### Core Directory
+1. **Application.cs**: Application entry point, responsible for initializing the plugin
+2. **MCPServiceConnection.cs**: Revit external command, used to start the service
+3. **SocketService.cs**: Socket service implementation, responsible for communicating with external clients
+4. **JsonRPC Directory**: Contains classes and implementations related to the JSON-RPC protocol
+
+### Commands Directory
+1. **Interfaces Directory**: Command-related interface definitions
+2. **Base Directory**: Contains base class implementations for commands
+3. **Registry Directory**: Command registration and management
+4. **Functional Directories** (Wall, Code, etc.): Contains specific functionality commands and event handlers
+
+### Utils Directory
+Contains various utility classes to help handle repeatedly used functionality.
+
+### Models Directory
+Contains data model classes used to pass data between different parts of the system.
+
+
+
 ## 简介
 
 revit-mcp-plugin 允许你使用claude客户端通过 MCP 协议与 Revit 进行交互。

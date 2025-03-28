@@ -31,7 +31,7 @@ namespace revit_mcp_plugin.Commands.Access
 
                 ResultInfo = new ViewInfo
                 {
-                    Id = activeView.Id.IntegerValue,
+                    Id = activeView.Id.Value,
                     UniqueId = activeView.UniqueId,
                     Name = activeView.Name,
                     ViewType = activeView.ViewType.ToString(),

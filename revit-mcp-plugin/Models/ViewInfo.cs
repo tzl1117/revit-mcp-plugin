@@ -11,7 +11,7 @@ namespace revit_mcp_plugin.Models
     /// </summary>
     public class ViewInfo
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string UniqueId { get; set; }
         public string Name { get; set; }
         public string ViewType { get; set; }

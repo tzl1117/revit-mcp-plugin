@@ -1,5 +1,9 @@
-﻿using Autodesk.Revit.UI;
+﻿using System;
+using Autodesk.Revit.UI;
 using System.Reflection;
+using System.Windows.Media.Imaging;
+
+
 
 namespace revit_mcp_plugin.Core
 {
@@ -7,9 +11,12 @@ namespace revit_mcp_plugin.Core
     {
         public Result OnStartup(UIControlledApplication application)
         {
-            RibbonPanel ribbonPanel = application.CreateRibbonPanel("revit-mcp");
-            PushButtonData pushButtonData = new PushButtonData("ID_EXCMD_TOGGLE_REVIT_REVIT_MCP", "mcp服务\n开关", Assembly.GetExecutingAssembly().Location, "revit_mcp_plugin.Core.MCPServiceConnection");
-            pushButtonData.ToolTip = "open/close mcp server";
+            RibbonPanel ribbonPanel = application.CreateRibbonPanel("Revit MCP Plugin");
+            PushButtonData pushButtonData = new PushButtonData("ID_EXCMD_TOGGLE_REVIT_REVIT_MCP", "Claude MCP Switch",
+                Assembly.GetExecutingAssembly().Location, "revit_mcp_plugin.Core.MCPServiceConnection");
+            pushButtonData.ToolTip = "Open / Close mcp server";
+            pushButtonData.Image = new BitmapImage(new Uri("/revit-mcp-plugin;component/Core/Ressources-icon-16.png", UriKind.RelativeOrAbsolute));
+            pushButtonData.LargeImage = new BitmapImage(new Uri("/revit-mcp-plugin;component/Core/Ressources/icon-32.png", UriKind.RelativeOrAbsolute));
             ribbonPanel.AddItem(pushButtonData);
 
             return Result.Succeeded;

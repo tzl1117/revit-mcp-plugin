@@ -142,7 +142,8 @@ namespace revit_mcp_plugin.Commands.Create
                                     curves.Append(JZLine.ToLine(jzLine));
                                 }
 
-                                floor = doc.Create.NewFloor(curves, floorType, baseLevel, _structural);
+                                // 多版本问题，临时注释
+                                //floor = doc.Create.NewFloor(curves, floorType, baseLevel, _structural);
                                 //编辑楼板参数
                                 if (floor != null)
                                 {

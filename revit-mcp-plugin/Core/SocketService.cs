@@ -7,12 +7,10 @@ using System.Threading;
 using Autodesk.Revit.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using revit_mcp_plugin.Commands.Code;
-using revit_mcp_plugin.Commands.Create;
-using revit_mcp_plugin.Commands.Access;
-using revit_mcp_plugin.Commands.Registry;
 using revit_mcp_plugin.Core.JsonRPC;
-using revit_mcp_plugin.Commands.Delete;
+using revit_mcp_plugin.API.Interfaces;
+using revit_mcp_plugin.Configuration;
+using revit_mcp_plugin.Utils;
 
 namespace revit_mcp_plugin.Core
 {
@@ -24,7 +22,11 @@ namespace revit_mcp_plugin.Core
         private bool _isRunning;
         private int _port = 8080;
         private UIApplication _uiApp;
-        private RevitCommandRegistry _commandRegistry;
+        private ICommandRegistry _commandRegistry;
+        private ILogger _logger;
+        private CommandExecutor _commandExecutor;
+
+        private string _dataFolder;
 
         public static SocketService Instance
         {
@@ -38,7 +40,13 @@ namespace revit_mcp_plugin.Core
 
         private SocketService()
         {
+            string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            _dataFolder = Path.Combine(appDataFolder, "revit-mcp-plugin");
+            //string configFilePath = Path.Combine(dataFolder, "settings.json");
+            //_commandRegistryFilePath = Path.Combine(dataFolder, "commandRegistry.json");
+
             _commandRegistry = new RevitCommandRegistry();
+            _logger = new Logger(_dataFolder);
         }
 
         public bool IsRunning => _isRunning;
@@ -53,23 +61,36 @@ namespace revit_mcp_plugin.Core
         public void Initialize(UIApplication uiApp)
         {
             _uiApp = uiApp;
-            RegisterCommands();
-        }
 
-        // 注册命令
-        private void RegisterCommands()
-        {
-            _commandRegistry.RegisterCommand(new GetAvailableFamilyTypesCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new GetCurrentViewInfoCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new GetCurrentViewElementsCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new GetSelectedElementsCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new DeleteElementCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new ExecuteCodeCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new CreatePointElementCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new CreateLineElementCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new CreateSurfaceElementCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new TagWallsCommand(_uiApp));
-            _commandRegistry.RegisterCommand(new ColorSplashCommand(_uiApp));
+            // 初始化事件管理器
+            ExternalEventManager.Instance.Initialize(uiApp, _logger);
+
+            // 记录当前 Revit 版本
+            var versionAdapter = new API.Versioning.RevitVersionAdapter(_uiApp.Application);
+            string currentVersion = versionAdapter.GetRevitVersion();
+            _logger.Info("当前 Revit 版本: {0}", currentVersion);
+
+
+
+            // 创建命令执行器
+            _commandExecutor = new CommandExecutor(_commandRegistry, _logger);
+
+            // 加载配置并注册命令
+            ConfigurationManager configManager = new ConfigurationManager(_logger, _dataFolder);
+            configManager.LoadConfiguration();
+
+            // 从配置中读取服务端口
+            if (configManager.Config.Settings.Port > 0)
+            {
+                _port = configManager.Config.Settings.Port;
+            }
+
+            // 加载命令
+            CommandManager commandManager = new CommandManager(
+                _commandRegistry, _logger, configManager, _uiApp);
+            commandManager.LoadCommands();
+
+            _logger.Info($"Socket service initialized on port {_port}");
         }
 
         public void Start()
@@ -221,6 +242,7 @@ namespace revit_mcp_plugin.Core
                 try
                 {                
                     object result = command.Execute(request.GetParamsObject(), request.Id);
+
                     return CreateSuccessResponse(request.Id, result);
                 }
                 catch (Exception ex)

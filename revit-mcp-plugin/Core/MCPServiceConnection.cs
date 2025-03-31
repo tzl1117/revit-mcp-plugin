@@ -12,14 +12,6 @@ namespace revit_mcp_plugin.Core
         {
             try
             {
-                //// 初始化版本适配器
-                //RevitVersionAdapter.Initialize(commandData.Application);
-
-                //// 获取程序集所在目录，用于配置文件路径
-                //string assemblyLocation = Assembly.GetExecutingAssembly().Location;
-                //string configDir = Path.GetDirectoryName(assemblyLocation);
-                //string configPath = Path.Combine(configDir, "commandsets.json");
-
                 // 获取socket服务
                 SocketService service = SocketService.Instance;
 

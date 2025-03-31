@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using revit_mcp_plugin.Commands.Interfaces;
+using SampleCommandSet.Extensions;
 
-namespace revit_mcp_plugin.Commands.Access
+namespace SampleCommandSet.Access
 {
     /// <summary>
     /// 获取当前视图元素的事件处理器
@@ -142,7 +143,7 @@ namespace revit_mcp_plugin.Commands.Access
                 // 构建结果
                 var elementInfos = elements.Select(e => new ElementInfo
                 {
-                    Id = e.Id.Value,
+                    Id = e.Id.GetIdValue(),
                     UniqueId = e.UniqueId,
                     Name = e.Name,
                     Category = e.Category?.Name ?? "unknow",
@@ -151,7 +152,7 @@ namespace revit_mcp_plugin.Commands.Access
 
                 ResultInfo = new ViewElementsResult
                 {
-                    ViewId = activeView.Id.Value,
+                    ViewId = activeView.Id.GetIdValue(),
                     ViewName = activeView.Name,
                     TotalElementsInView = new FilteredElementCollector(doc, activeView.Id).GetElementCount(),
                     FilteredElementCount = elementInfos.Count,
@@ -174,7 +175,7 @@ namespace revit_mcp_plugin.Commands.Access
             var properties = new Dictionary<string, string>();
 
             // 添加通用属性
-            properties.Add("ElementId", element.Id.Value.ToString());
+            properties.Add("ElementId", element.Id.GetIdValue().ToString());
 
             if (element.Location != null)
             {
@@ -208,7 +209,7 @@ namespace revit_mcp_plugin.Commands.Access
                     else if (param.StorageType == StorageType.Integer)
                         properties.Add(paramName, param.AsInteger().ToString());
                     else if (param.StorageType == StorageType.ElementId)
-                        properties.Add(paramName, param.AsElementId().Value.ToString());
+                        properties.Add(paramName, param.AsElementId().GetIdValue().ToString());
                 }
             }
 

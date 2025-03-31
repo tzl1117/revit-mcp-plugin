@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using SampleCommandSet.Extensions;
 
-namespace revit_mcp_plugin.Commands.Access
+namespace SampleCommandSet.Access
 {
     public class GetSelectedElementsEventHandler : IExternalEventHandler, IWaitableExternalEventHandler
     {
@@ -46,7 +47,7 @@ namespace revit_mcp_plugin.Commands.Access
                 // 转换为ElementInfo列表
                 ResultElements = selectedElements.Select(element => new ElementInfo
                 {
-                    Id = element.Id.Value,
+                    Id = element.Id.GetIdValue(),
                     UniqueId = element.UniqueId,
                     Name = element.Name,
                     Category = element.Category?.Name

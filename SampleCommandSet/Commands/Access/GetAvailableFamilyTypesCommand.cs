@@ -4,7 +4,7 @@ using revit_mcp_plugin.Commands.Base;
 using System;
 using System.Collections.Generic;
 
-namespace revit_mcp_plugin.Commands.Access
+namespace SampleCommandSet.Access
 {
     /// <summary>
     /// 获取当前项目中可用族类型的命令

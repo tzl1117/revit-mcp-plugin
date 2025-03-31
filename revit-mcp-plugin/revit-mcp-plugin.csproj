@@ -13,23 +13,6 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
@@ -61,9 +44,11 @@
     </Reference>
     <Reference Include="RevitAPI, Version=24.0.0.0, Culture=neutral, processorArchitecture=Amd64">
       <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\RevitAPI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI, Version=24.0.0.0, Culture=neutral, processorArchitecture=Amd64">
       <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System.Drawing" />
@@ -96,19 +81,11 @@
     <Compile Include="API\Models\CommandResult.cs" />
     <Compile Include="API\Versioning\RevitVersionAdapter.cs" />
     <Compile Include="API\Versioning\VersionHelper.cs" />
-    <Compile Include="Commands\Access\GetAvailableFamilyTypesCommand.cs" />
-    <Compile Include="Commands\Access\GetAvailableFamilyTypesEventHandler.cs" />
-    <Compile Include="Commands\Access\GetSelectedElementsCommand.cs" />
-    <Compile Include="Commands\Access\GetSelectedElementsEventHandler.cs" />
     <Compile Include="Commands\Base\ExternalEventCommandBase.cs" />
     <Compile Include="Commands\Code\ExecuteCodeCommand.cs" />
     <Compile Include="Commands\Code\ExecuteCodeEventHandler.cs" />
     <Compile Include="Commands\Create\ColorSplashCommand.cs" />
     <Compile Include="Commands\Create\ColorSplashEventHandler.cs" />
-    <Compile Include="Commands\Access\GetCurrentViewElementsCommand.cs" />
-    <Compile Include="Commands\Access\GetCurrentViewElementsEventHandler.cs" />
-    <Compile Include="Commands\Access\GetCurrentViewInfoCommand.cs" />
-    <Compile Include="Commands\Access\GetCurrentViewInfoEventHandler.cs" />
     <Compile Include="Commands\Create\CreateLineElementCommand.cs" />
     <Compile Include="Commands\Create\CreateLineElementEventHandler.cs" />
     <Compile Include="Commands\Create\CreatePointElementCommand.cs" />
@@ -117,15 +94,11 @@
     <Compile Include="Commands\Create\CreateSurfaceElementEventHandler.cs" />
     <Compile Include="Commands\Create\TagWallsCommand.cs" />
     <Compile Include="Commands\Create\TagWallsEventHandler.cs" />
-    <Compile Include="Commands\Delete\DeleteElementCommand.cs" />
-    <Compile Include="Commands\Delete\DeleteElementEventHandler.cs" />
     <Compile Include="Commands\Interfaces\IRevitCommand.cs" />
     <Compile Include="Commands\Interfaces\IRevitCommandInitializable.cs" />
     <Compile Include="Commands\Interfaces\IWaitableExternalEventHandler.cs" />
     <Compile Include="Commands\Registry\RevitCommandRegistry.cs" />
     <Compile Include="Commands\Versioning\RevitVersionAdapter.cs" />
-    <Compile Include="Commands\Wall\CreateWallCommand.cs" />
-    <Compile Include="Commands\Wall\CreateWallEventHandler.cs" />
     <Compile Include="Configuration\CommandConfig.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\DeveloperInfo.cs" />
@@ -156,9 +129,6 @@
     <Compile Include="Models\WallInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\SocketService.cs" />
-    <Compile Include="UI\CommandSetSettingsControl.xaml.cs">
-      <DependentUpon>CommandSetSettingsControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\CommandSetSettingsPage.xaml.cs">
       <DependentUpon>CommandSetSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -166,6 +136,7 @@
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Logger.cs" />
+    <Compile Include="Utils\PathManager.cs" />
     <Compile Include="Utils\ProjectUtils.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -176,10 +147,6 @@
     <Resource Include="Core\Ressources\icon-32.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UI\CommandSetSettingsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UI\CommandSetSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -188,6 +155,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Core\Ressources\settings-16.png" />
+    <Resource Include="Core\Ressources\settings-32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

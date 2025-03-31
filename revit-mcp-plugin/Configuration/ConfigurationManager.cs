@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using revit_mcp_plugin.API.Interfaces;
+using revit_mcp_plugin.Utils;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,21 +11,17 @@ namespace revit_mcp_plugin.Configuration
     public class ConfigurationManager
     {
         private readonly ILogger _logger;
-        private readonly string _dataFolder;
         private readonly string _configPath;
 
         public FrameworkConfig Config { get; private set; }
 
-        public ConfigurationManager(ILogger logger, string dataFolder)
+        public ConfigurationManager(ILogger logger)
         {
             _logger = logger;
-            _dataFolder = dataFolder;
 
             // 配置文件路径
-            _configPath = Path.Combine(_dataFolder, "commandRegistry.json");
+            _configPath = PathManager.GetCommandRegistryFilePath();
         }
-
-        public string DataFolder {  get { return _dataFolder; } }
 
         /// <summary>
         /// 加载配置

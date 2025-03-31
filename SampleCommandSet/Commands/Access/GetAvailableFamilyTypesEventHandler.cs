@@ -1,12 +1,14 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using revit_mcp_plugin.Commands.Interfaces;
+using SampleCommandSet.Extensions;
+using SampleCommandSet.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace revit_mcp_plugin.Commands.Access
+namespace SampleCommandSet.Access
 {
     public class GetAvailableFamilyTypesEventHandler : IExternalEventHandler, IWaitableExternalEventHandler
     {
@@ -68,7 +70,7 @@ namespace revit_mcp_plugin.Commands.Access
                     {
                         filteredElements = filteredElements.Where(et =>
                         {
-                            var categoryId = et.Category?.Id.Value;
+                            var categoryId = et.Category?.Id.GetIdValue();
                             return categoryId != null && validCategoryIds.Contains((int)categoryId.Value);
                         });
                     }
@@ -108,7 +110,7 @@ namespace revit_mcp_plugin.Commands.Access
                     }
                     return new FamilyTypeInfo
                     {
-                        FamilyTypeId = et.Id.Value,
+                        FamilyTypeId = et.Id.GetIdValue(),
                         UniqueId = et.UniqueId,
                         FamilyName = familyName,
                         TypeName = et.Name,
@@ -131,14 +133,5 @@ namespace revit_mcp_plugin.Commands.Access
         {
             return "获取可用族类型";
         }
-    }
-
-    public class FamilyTypeInfo
-    {
-        public long FamilyTypeId { get; set; }
-        public string UniqueId { get; set; }
-        public string FamilyName { get; set; }
-        public string TypeName { get; set; }
-        public string Category { get; set; }
     }
 }

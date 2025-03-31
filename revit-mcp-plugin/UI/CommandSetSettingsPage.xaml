@@ -12,32 +12,27 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <!-- 标题 -->
+        <!-- Title -->
         <StackPanel Grid.Row="0" Margin="0,0,0,15">
-            <TextBlock Text="命令集设置" FontSize="22" FontWeight="SemiBold"/>
-            <TextBlock Text="从以下命令集中选择要启用的功能，作为软件扩展" 
+            <TextBlock Text="Command Set Settings" FontSize="22" FontWeight="SemiBold"/>
+            <TextBlock Text="Select the commands you want to enable" 
                        Foreground="#666666" Margin="0,5,0,0"/>
         </StackPanel>
-
-        <!-- 主内容区域 -->
+        <!-- Main Content Area -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-            <!-- 命令集列表 -->
+            <!-- Command Set List -->
             <Border Grid.Column="0" BorderBrush="#e0e0e0" BorderThickness="1">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0" Text="可用命令集" Padding="10,8" 
+                    <TextBlock Grid.Row="0" Text="Available Command Sets" Padding="10,8" 
                                Background="#f0f0f0" FontWeight="SemiBold"/>
-
                     <ListBox Grid.Row="1" x:Name="CommandSetListBox" 
                              SelectionChanged="CommandSetListBox_SelectionChanged"
                              BorderThickness="0">
@@ -54,8 +49,7 @@
                     </ListBox>
                 </Grid>
             </Border>
-
-            <!-- 命令集功能列表 -->
+            <!-- Command Set Features List -->
             <Border Grid.Column="1" BorderBrush="#e0e0e0" BorderThickness="0,1,1,1"
                     Margin="10,0,0,0">
                 <Grid>
@@ -63,47 +57,44 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-
                     <TextBlock Grid.Row="0" x:Name="FeaturesHeaderTextBlock" 
-                               Text="功能列表" Padding="10,8" 
+                               Text="Feature List" Padding="10,8" 
                                Background="#f0f0f0" FontWeight="SemiBold"/>
-
                     <ListView Grid.Row="1" x:Name="FeaturesListView" BorderThickness="0">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="启用" Width="50">
+                                <GridViewColumn Header="Enable" Width="50">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <CheckBox IsChecked="{Binding IsEnabled, Mode=TwoWay}"
+                                            <CheckBox IsChecked="{Binding Enabled, Mode=TwoWay}"
                                                      HorizontalAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="功能名称" Width="150" 
-                                               DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="描述" Width="280" 
+                                <GridViewColumn Header="Name" Width="150" 
+                                               DisplayMemberBinding="{Binding CommandName}"/>
+                                <GridViewColumn Header="Description" Width="280" 
                                                DisplayMemberBinding="{Binding Description}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
-
-                    <!-- 无命令集选中时显示 -->
+                    <!-- Displayed when no command set is selected -->
                     <TextBlock Grid.Row="1" x:Name="NoSelectionTextBlock"
-                              Text="请从左侧选择一个命令集查看包含的功能" 
+                              Text="Please select a command set from the left to view its commands" 
                               HorizontalAlignment="Center" VerticalAlignment="Center"
                               Foreground="#999" FontSize="14" TextWrapping="Wrap"
                               Visibility="Collapsed"/>
                 </Grid>
             </Border>
         </Grid>
-
-        <!-- 底部按钮 -->
+        <!-- Bottom Buttons -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
-            <Button Content="刷新" Width="80" Height="30" Margin="0,0,10,0" Click="RefreshButton_Click"/>
-            <Button Content="全选" Width="80" Height="30" Margin="0,0,10,0" Click="SelectAllButton_Click"/>
-            <Button Content="全不选" Width="80" Height="30" Margin="0,0,10,0" Click="UnselectAllButton_Click"/>
-            <Button Content="应用" Width="80" Height="30" Background="#0078D7" Foreground="White" 
-                   Click="ApplyButton_Click"/>
+            <Button Content="Open CommandSet Folder" Width="150" Height="30" Margin="0,0,10,0" Click="OpenFolderButton_Click"/>
+            <Button Content="Refresh" Width="80" Height="30" Margin="0,0,10,0" Click="RefreshButton_Click"/>
+            <Button Content="Select All" Width="80" Height="30" Margin="0,0,10,0" Click="SelectAllButton_Click"/>
+            <Button Content="Deselect All" Width="80" Height="30" Margin="0,0,10,0" Click="UnselectAllButton_Click"/>
+            <Button Content="Save" Width="80" Height="30" Background="#0078D7" Foreground="White" 
+                   Click="SaveButton_Click"/>
         </StackPanel>
     </Grid>
 </Page>

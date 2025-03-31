@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using revit_mcp_plugin.Commands.Base;
 using System;
 
-namespace revit_mcp_plugin.Commands.Access
+namespace SampleCommandSet.Access
 {
     /// <summary>
     /// 获取当前选中元素的命令

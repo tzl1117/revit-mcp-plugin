@@ -4,7 +4,7 @@ using revit_mcp_plugin.Commands.Base;
 using revit_mcp_plugin.Models;
 using System;
 
-namespace revit_mcp_plugin.Commands.Access
+namespace SampleCommandSet.Access
 {
     public class GetCurrentViewInfoCommand : ExternalEventCommandBase
     {

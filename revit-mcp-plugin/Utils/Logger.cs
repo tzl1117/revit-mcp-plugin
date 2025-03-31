@@ -8,19 +8,10 @@ namespace revit_mcp_plugin.Utils
     {
         private readonly string _logFilePath;
         private LogLevel _currentLogLevel = LogLevel.Info;
-        private string _dataFolderPath;
 
-        public Logger(string dataFolderPath)
+        public Logger()
         {
-            _dataFolderPath = dataFolderPath;
-            string logFolder = Path.Combine(_dataFolderPath, "logs");
-
-            if (!Directory.Exists(logFolder))
-            {
-                Directory.CreateDirectory(logFolder);
-            }
-
-            _logFilePath = Path.Combine(logFolder, $"mcp_{DateTime.Now:yyyyMMdd}.log");
+            _logFilePath = Path.Combine(PathManager.GetLogsDirectoryPath(), $"mcp_{DateTime.Now:yyyyMMdd}.log");
 
         }
 

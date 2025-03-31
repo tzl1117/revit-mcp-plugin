@@ -26,8 +26,6 @@ namespace revit_mcp_plugin.Core
         private ILogger _logger;
         private CommandExecutor _commandExecutor;
 
-        private string _dataFolder;
-
         public static SocketService Instance
         {
             get
@@ -40,13 +38,8 @@ namespace revit_mcp_plugin.Core
 
         private SocketService()
         {
-            string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            _dataFolder = Path.Combine(appDataFolder, "revit-mcp-plugin");
-            //string configFilePath = Path.Combine(dataFolder, "settings.json");
-            //_commandRegistryFilePath = Path.Combine(dataFolder, "commandRegistry.json");
-
             _commandRegistry = new RevitCommandRegistry();
-            _logger = new Logger(_dataFolder);
+            _logger = new Logger();
         }
 
         public bool IsRunning => _isRunning;
@@ -76,7 +69,7 @@ namespace revit_mcp_plugin.Core
             _commandExecutor = new CommandExecutor(_commandRegistry, _logger);
 
             // 加载配置并注册命令
-            ConfigurationManager configManager = new ConfigurationManager(_logger, _dataFolder);
+            ConfigurationManager configManager = new ConfigurationManager(_logger);
             configManager.LoadConfiguration();
 
             // 从配置中读取服务端口

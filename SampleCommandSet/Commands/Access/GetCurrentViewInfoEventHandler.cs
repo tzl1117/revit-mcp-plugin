@@ -3,8 +3,9 @@ using revit_mcp_plugin.Commands.Interfaces;
 using revit_mcp_plugin.Models;
 using System;
 using System.Threading;
+using SampleCommandSet.Extensions;
 
-namespace revit_mcp_plugin.Commands.Access
+namespace SampleCommandSet.Access
 {
     public class GetCurrentViewInfoEventHandler: IExternalEventHandler, IWaitableExternalEventHandler
     {
@@ -31,7 +32,7 @@ namespace revit_mcp_plugin.Commands.Access
 
                 ResultInfo = new ViewInfo
                 {
-                    Id = activeView.Id.Value,
+                    Id = activeView.Id.GetIdValue(),
                     UniqueId = activeView.UniqueId,
                     Name = activeView.Name,
                     ViewType = activeView.ViewType.ToString(),

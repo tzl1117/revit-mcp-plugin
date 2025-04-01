@@ -71,12 +71,14 @@ namespace revit_mcp_plugin.Core
             // 加载配置并注册命令
             ConfigurationManager configManager = new ConfigurationManager(_logger);
             configManager.LoadConfiguration();
+            
 
-            // 从配置中读取服务端口
-            if (configManager.Config.Settings.Port > 0)
-            {
-                _port = configManager.Config.Settings.Port;
-            }
+            //// 从配置中读取服务端口
+            //if (configManager.Config.Settings.Port > 0)
+            //{
+            //    _port = configManager.Config.Settings.Port;
+            //}
+            _port = 8080; // 固定端口号
 
             // 加载命令
             CommandManager commandManager = new CommandManager(

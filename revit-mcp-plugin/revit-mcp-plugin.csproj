@@ -36,9 +36,6 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
-    <Reference Include="RevitAddInUtility, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\RevitAddInUtility.dll</HintPath>
-    </Reference>
     <Reference Include="RevitAPI, Version=24.0.0.0, Culture=neutral, processorArchitecture=Amd64">
       <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\RevitAPI.dll</HintPath>
       <Private>False</Private>
@@ -72,24 +69,6 @@
     <Compile Include="API\Models\CommandResult.cs" />
     <Compile Include="API\Versioning\RevitVersionAdapter.cs" />
     <Compile Include="API\Versioning\VersionHelper.cs" />
-    <Compile Include="Commands\Base\ExternalEventCommandBase.cs" />
-    <Compile Include="Commands\Code\ExecuteCodeCommand.cs" />
-    <Compile Include="Commands\Code\ExecuteCodeEventHandler.cs" />
-    <Compile Include="Commands\Create\ColorSplashCommand.cs" />
-    <Compile Include="Commands\Create\ColorSplashEventHandler.cs" />
-    <Compile Include="Commands\Create\CreateLineElementCommand.cs" />
-    <Compile Include="Commands\Create\CreateLineElementEventHandler.cs" />
-    <Compile Include="Commands\Create\CreatePointElementCommand.cs" />
-    <Compile Include="Commands\Create\CreatePointElementEventHandler.cs" />
-    <Compile Include="Commands\Create\CreateSurfaceElementCommand.cs" />
-    <Compile Include="Commands\Create\CreateSurfaceElementEventHandler.cs" />
-    <Compile Include="Commands\Create\TagWallsCommand.cs" />
-    <Compile Include="Commands\Create\TagWallsEventHandler.cs" />
-    <Compile Include="Commands\Interfaces\IRevitCommand.cs" />
-    <Compile Include="Commands\Interfaces\IRevitCommandInitializable.cs" />
-    <Compile Include="Commands\Interfaces\IWaitableExternalEventHandler.cs" />
-    <Compile Include="Commands\Registry\RevitCommandRegistry.cs" />
-    <Compile Include="Commands\Versioning\RevitVersionAdapter.cs" />
     <Compile Include="Configuration\CommandConfig.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\DeveloperInfo.cs" />

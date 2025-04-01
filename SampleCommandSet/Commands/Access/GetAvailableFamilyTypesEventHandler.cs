@@ -1,6 +1,6 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using revit_mcp_plugin.Commands.Interfaces;
+using revit_mcp_plugin.API.Interfaces;
 using SampleCommandSet.Extensions;
 using SampleCommandSet.Models;
 using System;

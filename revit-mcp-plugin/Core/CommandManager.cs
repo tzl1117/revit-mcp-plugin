@@ -67,6 +67,11 @@ namespace revit_mcp_plugin.Core
                         continue;
                     }
 
+                    // 替换路径中的版本占位符
+                    commandConfig.AssemblyPath = commandConfig.AssemblyPath.Contains("{VERSION}")
+                        ? commandConfig.AssemblyPath.Replace("{VERSION}", currentVersion)
+                        : commandConfig.AssemblyPath;
+
                     // 加载外部命令程序集
                     LoadCommandFromAssembly(commandConfig);
                 }
@@ -92,8 +97,8 @@ namespace revit_mcp_plugin.Core
                 string assemblyPath = config.AssemblyPath;
                 if (!Path.IsPathRooted(assemblyPath))
                 {
-                    // 如果不是绝对路径，则相对于应用程序目录
-                    string baseDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                    // 如果不是绝对路径，则相对于Commands目录
+                    string baseDir = PathManager.GetCommandsDirectoryPath();
                     assemblyPath = Path.Combine(baseDir, assemblyPath);
                 }
 

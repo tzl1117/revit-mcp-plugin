@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using revit_mcp_plugin.Commands.Interfaces;
 using SampleCommandSet.Extensions;
+using revit_mcp_plugin.API.Interfaces;
 
 namespace SampleCommandSet.Access
 {

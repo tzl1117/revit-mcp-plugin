@@ -13,21 +13,111 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug 2019|x64' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\revit-mcp-plugin\bin\x64\Debug\commands\SampleCommandset\</OutputPath>
+    <OutputPath>..\revit-mcp-plugin\bin\x64\Debug\commands\SampleCommandset\2019\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>..\revit-mcp-plugin\bin\x64\Release\commands\SampleCommandset\</OutputPath>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 2019|x64' ">
+    <OutputPath>..\revit-mcp-plugin\bin\x64\Release\commands\SampleCommandset\2019\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2020|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\revit-mcp-plugin\bin\x64\Debug\commands\SampleCommandset\2020\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release 2020|x64'">
+    <OutputPath>..\revit-mcp-plugin\bin\x64\Release\commands\SampleCommandset\2020\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2021|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\revit-mcp-plugin\bin\x64\Debug\commands\SampleCommandset\2021\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release 2021|x64'">
+    <OutputPath>..\revit-mcp-plugin\bin\x64\Release\commands\SampleCommandset\2021\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2022|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\revit-mcp-plugin\bin\x64\Debug\commands\SampleCommandset\2022\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release 2022|x64'">
+    <OutputPath>..\revit-mcp-plugin\bin\x64\Release\commands\SampleCommandset\2022\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2023|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\revit-mcp-plugin\bin\x64\Debug\commands\SampleCommandset\2023\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release 2023|x64'">
+    <OutputPath>..\revit-mcp-plugin\bin\x64\Release\commands\SampleCommandset\2023\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2024|x64'">
+    <OutputPath>..\revit-mcp-plugin\bin\x64\Debug\commands\SampleCommandset\2024\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release 2024|x64'">
+    <OutputPath>..\revit-mcp-plugin\bin\x64\Release\commands\SampleCommandset\2024\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
@@ -75,9 +165,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="command.json" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\revit-mcp-plugin\revit-mcp-plugin.csproj">
       <Project>{43cd0fd7-df41-4f64-92be-a0f78666d86f}</Project>
       <Name>revit-mcp-plugin</Name>
@@ -89,5 +176,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureOutputPath" BeforeTargets="Build">
     <MakeDir Directories="$(OutputPath)" Condition="!Exists('$(OutputPath)')" />
+  </Target>
+  <Target Name="CopyCommandJson" AfterTargets="Build">
+    <Copy SourceFiles="$(ProjectDir)command.json" DestinationFolder="$(OutputPath)..\" SkipUnchangedFiles="true" />
   </Target>
 </Project>

@@ -1,8 +1,8 @@
 ﻿using Autodesk.Revit.UI;
-using revit_mcp_plugin.API.Interfaces;
+using revit_mcp_sdk.API.Interfaces;
 using System.Threading;
 
-namespace SampleCommandSet.Test
+namespace SampleCommandSet.Commands.Test
 {
     public class SayHelloEventHandler : IExternalEventHandler, IWaitableExternalEventHandler
     {

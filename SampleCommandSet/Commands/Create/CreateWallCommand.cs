@@ -1,9 +1,9 @@
 ﻿using Autodesk.Revit.UI;
-using revit_mcp_plugin.API.Base;
+using revit_mcp_sdk.API.Base;
 using System;
 using Newtonsoft.Json.Linq;
 
-namespace SampleCommandSet.Create
+namespace SampleCommandSet.Commands.Create
 {
     /// <summary>
     /// 创建墙命令

@@ -7,8 +7,8 @@ using System.Threading;
 using Autodesk.Revit.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using revit_mcp_plugin.Core.JsonRPC;
-using revit_mcp_plugin.API.Interfaces;
+using revit_mcp_sdk.API.Models;
+using revit_mcp_sdk.API.Interfaces;
 using revit_mcp_plugin.Configuration;
 using revit_mcp_plugin.Utils;
 
@@ -59,7 +59,7 @@ namespace revit_mcp_plugin.Core
             ExternalEventManager.Instance.Initialize(uiApp, _logger);
 
             // 记录当前 Revit 版本
-            var versionAdapter = new API.Versioning.RevitVersionAdapter(_uiApp.Application);
+            var versionAdapter = new revit_mcp_sdk.API.Versioning.RevitVersionAdapter(_uiApp.Application);
             string currentVersion = versionAdapter.GetRevitVersion();
             _logger.Info("当前 Revit 版本: {0}", currentVersion);
 

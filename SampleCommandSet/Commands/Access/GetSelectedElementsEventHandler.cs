@@ -1,13 +1,13 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using revit_mcp_plugin.API.Interfaces;
+using revit_mcp_sdk.API.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using SampleCommandSet.Extensions;
 
-namespace SampleCommandSet.Access
+namespace SampleCommandSet.Commands.Access
 {
     public class GetSelectedElementsEventHandler : IExternalEventHandler, IWaitableExternalEventHandler
     {

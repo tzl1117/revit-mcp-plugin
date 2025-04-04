@@ -1,6 +1,6 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using revit_mcp_plugin.API.Interfaces;
+using revit_mcp_sdk.API.Interfaces;
 using SampleCommandSet.Extensions;
 using SampleCommandSet.Models;
 using System;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace SampleCommandSet.Access
+namespace SampleCommandSet.Commands.Access
 {
     public class GetAvailableFamilyTypesEventHandler : IExternalEventHandler, IWaitableExternalEventHandler
     {

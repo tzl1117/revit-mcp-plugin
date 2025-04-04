@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace revit_mcp_plugin.Models
+namespace SampleCommandSet.Models
 {
     /// <summary>
     /// 视图信息数据结构

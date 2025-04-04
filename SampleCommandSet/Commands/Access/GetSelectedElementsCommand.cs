@@ -1,9 +1,9 @@
 ﻿using Autodesk.Revit.UI;
 using Newtonsoft.Json.Linq;
-using revit_mcp_plugin.API.Base;
+using revit_mcp_sdk.API.Base;
 using System;
 
-namespace SampleCommandSet.Access
+namespace SampleCommandSet.Commands.Access
 {
     /// <summary>
     /// 获取当前选中元素的命令

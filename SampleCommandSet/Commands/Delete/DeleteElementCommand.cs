@@ -1,12 +1,11 @@
 ﻿using Autodesk.Revit.UI;
 using Newtonsoft.Json.Linq;
-using revit_mcp_plugin.API.Base;
-using revit_mcp_plugin.API.Models;
-using revit_mcp_plugin.Core.JsonRPC;
-using revit_mcp_plugin.Exceptions;
+using revit_mcp_sdk.API.Base;
+using revit_mcp_sdk.API.Models;
+using revit_mcp_sdk.Exceptions;
 using System;
 
-namespace SampleCommandSet.Delete
+namespace SampleCommandSet.Commands.Delete
 {
     public class DeleteElementCommand : ExternalEventCommandBase
     {

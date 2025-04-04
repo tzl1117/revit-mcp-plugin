@@ -32,21 +32,40 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdWindows, Version=5.0.3.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
-    <Reference Include="RevitAPI, Version=24.0.0.0, Culture=neutral, processorArchitecture=Amd64">
+    <Reference Include="PresentationCore" />
+    <Reference Include="revit-mcp-sdk, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\revit-mcp-sdk.1.0.0-beta.1\lib\net48\revit-mcp-sdk.dll</HintPath>
+    </Reference>
+    <Reference Include="RevitAddInUtility, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\RevitAddInUtility.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPI, Version=24.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="RevitAPIUI, Version=24.0.0.0, Culture=neutral, processorArchitecture=Amd64">
+    <Reference Include="RevitAPIUI, Version=24.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PresentationCore" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml" />
+    <Reference Include="UIFramework, Version=24.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\UIFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UIFrameworkServices, Version=24.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Revit_API_x64.2024.0.2\lib\NET480\UIFrameworkServices.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,15 +79,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Base\ExternalEventCommandBase.cs" />
-    <Compile Include="API\Interfaces\ICommandRegistry.cs" />
-    <Compile Include="API\Interfaces\ILogger.cs" />
-    <Compile Include="API\Interfaces\IRevitCommand.cs" />
-    <Compile Include="API\Interfaces\IRevitCommandInitializable.cs" />
-    <Compile Include="API\Interfaces\IWaitableExternalEventHandler.cs" />
-    <Compile Include="API\Models\CommandResult.cs" />
-    <Compile Include="API\Versioning\RevitVersionAdapter.cs" />
-    <Compile Include="API\Versioning\VersionHelper.cs" />
     <Compile Include="Configuration\CommandConfig.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\DeveloperInfo.cs" />
@@ -78,15 +88,9 @@
     <Compile Include="Core\CommandExecutor.cs" />
     <Compile Include="Core\CommandManager.cs" />
     <Compile Include="Core\ExternalEventManager.cs" />
-    <Compile Include="Core\JsonRPC\JsonRPCErrorCodes.cs" />
-    <Compile Include="Core\JsonRPC\JsonRPCRequest.cs" />
-    <Compile Include="Core\JsonRPC\JsonRPCResponse.cs" />
-    <Compile Include="Core\JsonRPC\JsonRPCSerializer.cs" />
     <Compile Include="Core\MCPServiceConnection.cs" />
     <Compile Include="Core\RevitCommandRegistry.cs" />
     <Compile Include="Core\Settings.cs" />
-    <Compile Include="Exceptions\CommandExecutionException.cs" />
-    <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="Models\AIResult.cs" />
     <Compile Include="Models\JZFace.cs" />
     <Compile Include="Models\JZLine.cs" />
@@ -94,9 +98,6 @@
     <Compile Include="Models\LineElement.cs" />
     <Compile Include="Models\PointElement.cs" />
     <Compile Include="Models\SurfaceElement.cs" />
-    <Compile Include="Models\Point.cs" />
-    <Compile Include="Models\ViewInfo.cs" />
-    <Compile Include="Models\WallInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\SocketService.cs" />
     <Compile Include="UI\CommandSetSettingsPage.xaml.cs">
@@ -107,7 +108,6 @@
     </Compile>
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\PathManager.cs" />
-    <Compile Include="Utils\ProjectUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

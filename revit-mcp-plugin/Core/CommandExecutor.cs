@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
-using revit_mcp_plugin.API.Interfaces;
-using revit_mcp_plugin.Core.JsonRPC;
-using revit_mcp_plugin.Exceptions;
+using revit_mcp_sdk.API.Interfaces;
+using revit_mcp_sdk.API.Models;
+using revit_mcp_sdk.Exceptions;
 using System;
 
 namespace revit_mcp_plugin.Core

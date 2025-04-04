@@ -1,6 +1,6 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using revit_mcp_plugin.API.Interfaces;
+using revit_mcp_sdk.API.Interfaces;
 using SampleCommandSet.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SampleCommandSet.Create
+namespace SampleCommandSet.Commands.Create
 {
     /// <summary>
     /// 创建墙的外部事件处理器

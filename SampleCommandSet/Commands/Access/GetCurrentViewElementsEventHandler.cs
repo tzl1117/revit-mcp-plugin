@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using SampleCommandSet.Extensions;
-using revit_mcp_plugin.API.Interfaces;
+using revit_mcp_sdk.API.Interfaces;
 
-namespace SampleCommandSet.Access
+namespace SampleCommandSet.Commands.Access
 {
     /// <summary>
     /// 获取当前视图元素的事件处理器

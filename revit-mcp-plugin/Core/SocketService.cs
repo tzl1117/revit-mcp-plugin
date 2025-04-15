@@ -7,8 +7,8 @@ using System.Threading;
 using Autodesk.Revit.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using revit_mcp_sdk.API.Models;
-using revit_mcp_sdk.API.Interfaces;
+using RevitMCPSDK.API.Models.JsonRPC;
+using RevitMCPSDK.API.Interfaces;
 using revit_mcp_plugin.Configuration;
 using revit_mcp_plugin.Utils;
 
@@ -59,7 +59,7 @@ namespace revit_mcp_plugin.Core
             ExternalEventManager.Instance.Initialize(uiApp, _logger);
 
             // 记录当前 Revit 版本
-            var versionAdapter = new revit_mcp_sdk.API.Versioning.RevitVersionAdapter(_uiApp.Application);
+            var versionAdapter = new RevitMCPSDK.API.Utils.RevitVersionAdapter(_uiApp.Application);
             string currentVersion = versionAdapter.GetRevitVersion();
             _logger.Info("当前 Revit 版本: {0}", currentVersion);
 
@@ -104,7 +104,7 @@ namespace revit_mcp_plugin.Core
                 };
                 _listenerThread.Start();              
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _isRunning = false;
             }
@@ -126,7 +126,7 @@ namespace revit_mcp_plugin.Core
                     _listenerThread.Join(1000);
                 }
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 // log error
             }
@@ -151,7 +151,7 @@ namespace revit_mcp_plugin.Core
             {
                 
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 // log
             }
@@ -197,7 +197,7 @@ namespace revit_mcp_plugin.Core
                     stream.Write(responseData, 0, responseData.Length);
                 }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 // log
             }

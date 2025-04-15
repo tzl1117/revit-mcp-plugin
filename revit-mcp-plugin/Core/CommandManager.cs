@@ -1,6 +1,6 @@
 ﻿using Autodesk.Revit.UI;
-using revit_mcp_sdk.API.Interfaces;
-using revit_mcp_sdk.API.Versioning;
+using RevitMCPSDK.API.Interfaces;
+using RevitMCPSDK.API.Utils;
 using revit_mcp_plugin.Configuration;
 using revit_mcp_plugin.Utils;
 using System;
@@ -114,14 +114,14 @@ namespace revit_mcp_plugin.Core
                 // 查找实现 IRevitCommand 接口的类型
                 foreach (Type type in assembly.GetTypes())
                 {
-                    if (typeof(revit_mcp_sdk.API.Interfaces.IRevitCommand).IsAssignableFrom(type) &&
+                    if (typeof(RevitMCPSDK.API.Interfaces.IRevitCommand).IsAssignableFrom(type) &&
                         !type.IsInterface &&
                         !type.IsAbstract)
                     {
                         try
                         {
                             // 创建命令实例
-                            revit_mcp_sdk.API.Interfaces.IRevitCommand command;
+                            RevitMCPSDK.API.Interfaces.IRevitCommand command;
 
                             // 检查命令是否实现了可初始化接口
                             if (typeof(IRevitCommandInitializable).IsAssignableFrom(type))

@@ -113,7 +113,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release 2024|x64'">
-    <OutputPath>..\revit-mcp-plugin\bin\x64\Release\commands\SampleCommandset\2024\</OutputPath>
+    <OutputPath>..\revit-mcp-plugin\bin\Release\2024\Commands\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>

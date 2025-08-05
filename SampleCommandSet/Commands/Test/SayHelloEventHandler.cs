@@ -16,6 +16,7 @@ namespace SampleCommandSet.Commands.Test
         public void Execute(UIApplication app)
         {
             TaskDialog.Show("revit-mcp", "hello MCP");
+            _resetEvent.Set();
         }
 
         public string GetName()
